@@ -1,11 +1,13 @@
 import logging
 
 from aiogram import Bot, Dispatcher
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from apscheduler.triggers.cron import CronTrigger
 
 from application.handlers import router
 from application.middlewares import DBMiddleware
 from application.settings import settings
-from application.utils import notify_admins
+from application.utils import notify_admins, daily_notify
 from application.database import UserDatabase
 
 
@@ -30,6 +32,10 @@ async def run():
 
     dp.update.middleware(DBMiddleware(db))
     dp.include_router(router)
+
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(daily_notify, CronTrigger(hour=19, minute=19), kwargs={"bot": bot, "db": db})
+    scheduler.start()
 
     await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)

@@ -21,7 +21,7 @@ class UserDatabase:
             started_practice BOOLEAN DEFAULT 0,
             wants_group BOOLEAN DEFAULT 0,
             wants_individually BOOLEAN DEFAULT 0,
-            next_notification_number INTEGER DEFAULT 1,
+            next_notification_index INTEGER DEFAULT 0,
             created_at TEXT DEFAULT CURRENT_TIMESTAMP
         );
         """
@@ -37,7 +37,7 @@ class UserDatabase:
         self.connection.commit()
 
     def update_user_field(self, telegram_id: int, field: str, value):
-        if field not in ["started_practice", "wants_group", "wants_individually", "next_notification_number"]:
+        if field not in ["started_practice", "wants_group", "wants_individually", "next_notification_index"]:
             raise ValueError("Invalid field name")
         query = f"UPDATE Users SET {field} = ? WHERE telegram_id = ?"
         self.connection.execute(query, (value, telegram_id))
@@ -80,6 +80,11 @@ class UserDatabase:
         file_path = "resources/exports/" + datetime.now().strftime("users_export_%Y-%m-%d_%H-%M-%S.xlsx")
         workbook.save(file_path)
         return file_path
+
+    def get_all_users_with_notifications(self) -> list[sqlite3.Row]:
+        query = "SELECT * FROM Users WHERE next_notification_index <= 19"
+        cursor = self.connection.execute(query)
+        return cursor.fetchall()
 
     def close(self):
         self.connection.close()
