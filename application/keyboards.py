@@ -20,19 +20,19 @@ START_KB = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text="🦾старт практики",
+                text="🦾Старт практики",
                 callback_data=StartPracticeCbData().pack()
             ),
         ],
         [
             InlineKeyboardButton(
-                text="⭐хочу в міні-групу",
+                text="💫Хочу в міні-групу",
                 callback_data=WantInGroupCbData().pack()
             ),
         ],
         [
             InlineKeyboardButton(
-                text="⭐хочу персональне тренування",
+                text="🔝Хочу персональне тренування",
                 callback_data=WantIndividuallyCbData().pack()
             )
         ]
@@ -85,7 +85,7 @@ START_PRACTICE_KB = InlineKeyboardMarkup(
     inline_keyboard=[
         [
             InlineKeyboardButton(
-                text="🦾старт практики",
+                text="🦾Старт практики",
                 url="https://youtu.be/nyHFKVLXV64"
             )
         ]
