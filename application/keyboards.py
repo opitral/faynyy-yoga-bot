@@ -15,6 +15,16 @@ class WantIndividuallyCbData(CallbackData, prefix="want_individually"):
 class BackToStartCbData(CallbackData, prefix="back_to_start"):
     pass
 
+WANT_IN_GROUP_BNT = InlineKeyboardButton(
+    text="💫Хочу в міні-групу",
+    callback_data=WantInGroupCbData().pack()
+)
+
+
+WANT_INDIVIDUALLY_BNT = InlineKeyboardButton(
+    text="🔝Хочу індивідуально",
+    callback_data=WantIndividuallyCbData().pack()
+)
 
 START_KB = InlineKeyboardMarkup(
     inline_keyboard=[
@@ -25,16 +35,10 @@ START_KB = InlineKeyboardMarkup(
             ),
         ],
         [
-            InlineKeyboardButton(
-                text="💫Хочу в міні-групу",
-                callback_data=WantInGroupCbData().pack()
-            ),
+            WANT_IN_GROUP_BNT
         ],
         [
-            InlineKeyboardButton(
-                text="🔝Хочу персональне тренування",
-                callback_data=WantIndividuallyCbData().pack()
-            )
+            WANT_INDIVIDUALLY_BNT
         ]
     ]
 )
@@ -67,13 +71,15 @@ WANT_INDIVIDUALLY_KB = InlineKeyboardMarkup(
     ]
 )
 
+SUBSCRIBE_BTN = InlineKeyboardButton(
+    text="Підписатись✅",
+    url="https://www.instagram.com/faynyy?igsh=MXUxOXRzZ3pxdmhocg%3D%3D&utm_source=qr"
+)
+
 SUBSCRIBE_KB = InlineKeyboardMarkup(
     inline_keyboard=[
         [
-            InlineKeyboardButton(
-                text="Підписатись✅",
-                url="https://www.instagram.com/faynyy?igsh=MXUxOXRzZ3pxdmhocg%3D%3D&utm_source=qr"
-            )
+            SUBSCRIBE_BTN
         ],
         [
             RETURN_TO_START_BTN
@@ -88,6 +94,20 @@ START_PRACTICE_KB = InlineKeyboardMarkup(
                 text="🦾Старт практики",
                 url="https://youtu.be/nyHFKVLXV64"
             )
+        ]
+    ]
+)
+
+REMEMBER_KB = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            WANT_IN_GROUP_BNT
+        ],
+        [
+            WANT_INDIVIDUALLY_BNT
+        ],
+        [
+            SUBSCRIBE_BTN
         ]
     ]
 )

@@ -8,7 +8,7 @@ from aiogram.types import Message, FSInputFile, CallbackQuery
 
 from application.database import UserDatabase
 from application.keyboards import START_KB, WantInGroupCbData, RETURN_TO_START_KB, BackToStartCbData, \
-    WantIndividuallyCbData, WANT_INDIVIDUALLY_KB, StartPracticeCbData, SUBSCRIBE_KB, START_PRACTICE_KB
+    WantIndividuallyCbData, WANT_INDIVIDUALLY_KB, StartPracticeCbData, SUBSCRIBE_KB, START_PRACTICE_KB, REMEMBER_KB
 from application.settings import settings
 
 router = Router()
@@ -62,6 +62,12 @@ async def start_practice_callback_handler(callback: CallbackQuery, db: UserDatab
         db.update_user_field(callback.from_user.id, "started_practice", 1)
 
     await callback.message.answer("Полетіли🚀", reply_markup=START_PRACTICE_KB)
+
+    async def delayed_message():
+        await asyncio.sleep(10) # 1800
+        await callback.message.answer("<i>Я супроводжуватиму тебе цього місяця, слідкуй за сповіщеннями, які мотивують до практики⚡️</i>\n\nХочеш розширити свої можливості, заспокоїти психіку та отримати здорове тіло👇🏻", parse_mode=ParseMode.HTML, reply_markup=REMEMBER_KB)
+
+    asyncio.create_task(delayed_message())
 
 
 @router.message(Command("export"), F.from_user.id.in_(settings.ADMINS_TELEGRAM_ID))
