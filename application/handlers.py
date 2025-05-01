@@ -64,7 +64,7 @@ async def start_practice_callback_handler(callback: CallbackQuery, db: UserDatab
     await callback.message.answer("Полетіли🚀", reply_markup=START_PRACTICE_KB)
 
     async def delayed_message():
-        await asyncio.sleep(10) # 1800
+        await asyncio.sleep(1800)
         await callback.message.answer("<i>Я супроводжуватиму тебе цього місяця, слідкуй за сповіщеннями, які мотивують до практики⚡️</i>\n\nХочеш розширити свої можливості, заспокоїти психіку та отримати здорове тіло👇🏻", parse_mode=ParseMode.HTML, reply_markup=REMEMBER_KB)
 
     asyncio.create_task(delayed_message())
