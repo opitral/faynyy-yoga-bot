@@ -1,7 +1,6 @@
 import logging
 
 from aiogram import Bot, Dispatcher
-from aiogram.types import BotCommand
 
 from application.handlers import router
 from application.settings import settings
@@ -21,11 +20,6 @@ async def on_shutdown(bot: Bot):
 async def run():
     bot = Bot(token=settings.BOT_API_TOKEN.get_secret_value())
     dp = Dispatcher()
-
-    commands = [
-        BotCommand(command="/start", description="Main page"),
-    ]
-    await bot.set_my_commands(commands)
 
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
