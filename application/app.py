@@ -1,15 +1,14 @@
 import logging
 
 from aiogram import Bot, Dispatcher
-from aiogram.exceptions import TelegramBadRequest
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 
+from application.database import UserDatabase
 from application.handlers import router
 from application.middlewares import DBMiddleware
 from application.settings import settings
 from application.utils import notify_admins, daily_notify
-from application.database import UserDatabase
 
 
 async def on_startup(bot: Bot):
