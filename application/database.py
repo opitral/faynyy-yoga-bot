@@ -59,7 +59,7 @@ class UserDatabase:
         workbook = Workbook()
         sheet = workbook.active
         sheet.title = "Users"
-        headers = ["Ідентифікатор в системі", "Телеграм ID", "Ім'я", "Прізвище", "Псивдонім",
+        headers = ["Ідентифікатор в системі", "Телеграм ID", "Ім'я", "Прізвище", "Псевдонім",
                    "Чи розпочав приактику?", "Чи хоче в міні-групу?", "Чи хоче індивідуально?", "Дата реєстрації"]
         sheet.append(headers)
 
@@ -68,9 +68,9 @@ class UserDatabase:
                 sheet.append([
                     row["id"],
                     row["telegram_id"],
-                    row["first_name"],
-                    row["last_name"],
-                    row["username"],
+                    row["first_name"] if row["first_name"] else "",
+                    row["last_name"] if row["last_name"] else "",
+                    "@" + row["username"] if row["username"] else "",
                     "Так" if row["started_practice"] else "Ні",
                     "Так" if row["wants_group"] else "Ні",
                     "Так" if row["wants_individually"] else "Ні",
