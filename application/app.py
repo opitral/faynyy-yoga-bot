@@ -1,6 +1,7 @@
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.exceptions import TelegramBadRequest
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from apscheduler.triggers.cron import CronTrigger
 

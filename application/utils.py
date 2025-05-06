@@ -2,6 +2,7 @@ import logging
 
 from aiogram import Bot
 from aiogram.enums import ParseMode
+from aiogram.exceptions import TelegramBadRequest
 
 from application.database import UserDatabase
 from application.settings import settings
@@ -9,7 +10,10 @@ from application.settings import settings
 
 async def notify_admins(bot: Bot, message: str, parse_mode: ParseMode = ParseMode.MARKDOWN):
     for admin_telegram_id in settings.ADMINS_TELEGRAM_ID:
-        await bot.send_message(admin_telegram_id, message, parse_mode=parse_mode, disable_web_page_preview=True)
+        try:
+            await bot.send_message(admin_telegram_id, message, parse_mode=parse_mode, disable_web_page_preview=True)
+        except TelegramBadRequest:
+            logging.warning(f"Failed to send message to admin {admin_telegram_id}")
 
 
 NOTIFICATIONS = [
@@ -42,5 +46,5 @@ async def daily_notify(bot: Bot, db: UserDatabase):
         try:
             await bot.send_message(chat_id=user["telegram_id"], text=NOTIFICATIONS[user["next_notification_index"]])
             db.update_user_field(user["telegram_id"], "next_notification_index", user["next_notification_index"] + 1)
-        except Exception as e:
-            logging.warning(f"Failed to send message to {user['telegram_id']}: {e}")
+        except TelegramBadRequest as e:
+            logging.warning(f"Failed to send message to user {user['telegram_id']}: {e}")
