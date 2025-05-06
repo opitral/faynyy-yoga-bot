@@ -30,3 +30,10 @@ if [ ! -f ".env" ]; then
 else
     echo "✅ .env file already exists."
 fi
+
+if [ "$(uname)" == "Linux" ]; then
+    echo "🕒 Changing system time to Kiev time..."
+    sudo timedatectl set-timezone Europe/Kiev
+else
+    echo "⚠️ System time change is not supported on this OS."
+fi
