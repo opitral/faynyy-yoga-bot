@@ -3,6 +3,7 @@ import logging
 
 from aiogram import Router, F
 from aiogram.enums import ChatAction, ParseMode
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import CommandStart, Command
 from aiogram.types import Message, FSInputFile, CallbackQuery
 
@@ -65,7 +66,12 @@ async def start_practice_callback_handler(callback: CallbackQuery, db: UserDatab
 
     async def delayed_message():
         await asyncio.sleep(1800)
-        await callback.message.answer("<i>Я супроводжуватиму тебе цього місяця, слідкуй за сповіщеннями, які мотивують до практики⚡️</i>\n\nХочеш розширити свої можливості, заспокоїти психіку та отримати здорове тіло👇🏻", parse_mode=ParseMode.HTML, reply_markup=REMEMBER_KB)
+        try:
+            await callback.message.answer("<i>Я супроводжуватиму тебе цього місяця, слідкуй за сповіщеннями, які мотивують до практики⚡️</i>\n\nХочеш розширити свої можливості, заспокоїти психіку та отримати здорове тіло👇🏻", parse_mode=ParseMode.HTML, reply_markup=REMEMBER_KB)
+        except TelegramBadRequest:
+            logging.warning(f"Failed to send delayed message to {callback.from_user.id}. User might have blocked the bot.")
+        else:
+            logging.info(f"Delayed message sent to {callback.from_user.id}")
 
     asyncio.create_task(delayed_message())
 
