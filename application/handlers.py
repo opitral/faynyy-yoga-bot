@@ -86,4 +86,4 @@ async def export_command_handler(message: Message, db: UserDatabase):
 
 @router.message()
 async def unknown_commands_handler(message: Message):
-    await message.answer("Не знаю такої команди. Спробуй ще раз")
+    await message.answer("Хочеш розширити свої можливості, заспокоїти психіку та отримати здорове тіло👇🏻 Пиши мені в особисті @faynyy і знайдемо комфортний формат для тебе")
