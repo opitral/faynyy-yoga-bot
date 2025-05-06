@@ -32,8 +32,8 @@ else
 fi
 
 if [ "$(uname)" == "Linux" ]; then
-    echo "🕒 Changing system time to Kiev time..."
-    sudo timedatectl set-timezone Europe/Kiev
+    echo "🕒 Changing system time to Kyiv time..."
+    sudo timedatectl set-timezone Europe/Kyiv
 else
     echo "⚠️ System time change is not supported on this OS."
 fi
